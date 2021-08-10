@@ -3,7 +3,7 @@
 ![Blender 2.93 - Tested!](https://img.shields.io/badge/Blender%202.93-Tested-brightgreen?style=flat-square&logo=blender)
 ![Blender 2.79 - Incompatible!](https://img.shields.io/badge/Blender%202.79-Incompatible-critical?style=flat-square&logo=blender)
 
-BPlayblast is an addon for Blender that aims to add playblast tools for fast animation previews. Based on @lucianomunoz's [Advanced Boomsmash](https://github.com/lucianomunoz/AdvancedBoomsmash), it uses the viewport's OpenGL rendering system and gives a few tools.
+BPlayblast is an addon for Blender that aims to add playblast tools for fast animation previews. Based on [lucianomunoz](https://github.com/lucianomunoz)'s [Advanced Boomsmash](https://github.com/lucianomunoz/AdvancedBoomsmash), it uses the viewport's OpenGL rendering system and gives a few tools.
 
 Supposed to work on Blender 2.93
 
