@@ -28,4 +28,10 @@ Checked itames are somewhat in order of completion, "to-do" items are not sorted
   - [ ] transparent
   - [ ] unsimplify
   - [ ] can autoplay use custom player
-  - [ ] ...
+- [ ] More rendering options:
+  - [ ] wireframe
+  - [ ] contour
+  - [ ] Ambient Occlusion
+  - [ ] Anti Aliasing
+  - [ ] Force shaders/texture display
+- [ ] ...
