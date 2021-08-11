@@ -13,7 +13,7 @@
 
 bl_info = {
     "name": "BPlayblast",
-    "author": "Loïc \"L0Lock\" Dautry & Luciano Muñoz & Cristian Hasbun",
+    "author": "Loïc Dautry & Luciano Muñoz & Cristian Hasbun",
     "description": "Gives playblast tools for fast animation previews.",
     "blender": (2, 93, 1),
     "version": (0, 0, 1),
@@ -116,7 +116,10 @@ class setDirname(bpy.types.Operator):
     
     def execute(self, context):
         cs = context.scene
-        cs.boom_props.dirname = os.path.dirname(bpy.data.filepath)
+        # cs.boom_props.dirname = os.path.dirname(bpy.data.filepath)
+        if bpy.data.is_saved == True:
+            cs.boom_props.dirname = "\\"
+        else: cs.boom_props.dirname = os.path.dirname(bpy.data.filepath)
         return {'FINISHED'} 
             
 
@@ -355,6 +358,11 @@ classes = (
 def register():
     for cls in classes:
         bpy.utils.register_class(cls)
+    bpy.types.Scene.boom_props = PointerProperty(
+            type = BoomProps, name = 'BoomSmash Properties', description = '')
+
+    bpy.types.WindowManager.boom_props = PointerProperty(
+            type = BoomProps, name = 'BoomSmash Global Properties', description = '')
 
 def unregister():
     for cls in reversed(classes):
@@ -378,7 +386,7 @@ def unregister():
 #     del bpy.types.WindowManager.boom_props
 
 
-if __name__ == '__main__':
-    register()
-    #unregister()
-    print('script goes brrr')
+# if __name__ == '__main__':
+#     register()
+#     #unregister()
+#     print('script goes brrr')
