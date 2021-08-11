@@ -153,17 +153,17 @@ class DoBoom(bpy.types.Operator):
 
         #pu.db
 
-        #guardo settings
+        # settings backup
         old_use_stamp = rd.use_stamp
         old_overlays = sd.overlay.show_overlays
         old_simplify = rd.use_simplify 
         old_filepath = rd.filepath
         old_film_transparent = rd.film_transparent
-        #old_image_settings = rd.image_settings
+        # old_image_settings = rd.image_settings
         old_resolution_percentage = rd.resolution_percentage
         old_frame_step = cs.frame_step
 
-        #afecto settings originales
+        # original settings affection
         rd.use_stamp = boom_props.use_stamp
         sd.overlay.show_overlays = boom_props.overlays
         if boom_props.unsimplify:
@@ -179,12 +179,12 @@ class DoBoom(bpy.types.Operator):
             context.area.spaces[0].region_3d.view_perspective = 'CAMERA'
            
         
-        #ejecuto
+        # Rendering goes brrrr!!
         bpy.ops.render.opengl(animation = True)
         if boom_props.autoplay:
             bpy.ops.render.play_rendered_anim()
  
-        #devuelvo settings
+        # settings restoration
         rd.use_stamp = old_use_stamp
         sd.overlay.show_overlays = old_overlays
         rd.use_simplify = old_simplify
@@ -199,7 +199,7 @@ class DoBoom(bpy.types.Operator):
         return {'FINISHED'}  
     
     #def cancel(self, context):
-    #    print('cancelado...')
+    #    print('brrr cancel brrr brrrr!!!')
     #    return {'CANCELLED'}  
 
 
@@ -240,17 +240,45 @@ def draw_boomsmash_panel(context, layout):
     # subrow.prop(context.scene, 'frame_preview_end', text = 'End')
     # col.separator()
 
-    # New layout, not onelined but working and better than nothing
+    # Alt layout, not onelined but working and better than nothing
+    # col.separator()
+    # sub = col.split()
+    # subrow = sub.row(align = True)
+    # subrow.prop(context.scene, 'use_preview_range', text = 'Use preview range:')
+    # subrow = col.split(align = True)
+    # subrow.enabled = context.scene.use_preview_range # truc qui grise
+    # subrow.prop(context.scene, 'frame_preview_start', text = 'Start')
+    # subrow.prop(boom_props, 'frame_skip', text = 'Skip')
+    # subrow.prop(context.scene, 'frame_preview_end', text = 'End')
+    # col.separator()
+
+    # New layout, insipred from Blender's timeline
     col.separator()
     sub = col.split()
     subrow = sub.row(align = True)
-    subrow.prop(context.scene, 'use_preview_range', text = 'Use preview range:')
-    subrow = col.split(align = True)
-    subrow.enabled = context.scene.use_preview_range # truc qui grise
-    subrow.prop(context.scene, 'frame_preview_start', text = 'Start')
-    subrow.prop(boom_props, 'frame_skip', text = 'Skip')
-    subrow.prop(context.scene, 'frame_preview_end', text = 'End')
+    subrow.prop(context.scene, 'use_preview_range', text = '')
+    subrow.scale_x = 0.8
+    if not context.scene.use_preview_range:
+        subrow.prop(context.scene, "frame_start", text="Start")
+        subrow.prop(boom_props, 'frame_skip', text = 'Skip')
+        subrow.prop(context.scene, "frame_end", text="End")
+    else:
+        subrow.prop(context.scene, "frame_preview_start", text="Alt Start")
+        subrow.prop(boom_props, 'frame_skip', text = 'Skip')
+        subrow.prop(context.scene, "frame_preview_end", text="Alt End")
     col.separator()
+
+    # ===== Blender's Playback control Reference =====
+    # row = layout.row(align=True)
+    #     row.prop(scene, "use_preview_range", text="", toggle=True)
+    #     sub = row.row(align=True)
+    #     sub.scale_x = 0.8
+    #     if not scene.use_preview_range:
+    #         sub.prop(scene, "frame_start", text="Start")
+    #         sub.prop(scene, "frame_end", text="End")
+    #     else:
+    #         sub.prop(scene, "frame_preview_start", text="Start")
+    #         sub.prop(scene, "frame_preview_end", text="End")
     
     final_res_x = (rd.resolution_x * boom_props.resolution_percentage) / 100
     final_res_y = (rd.resolution_y * boom_props.resolution_percentage) / 100
@@ -327,13 +355,8 @@ classes = (
 def register():
     for cls in classes:
         bpy.utils.register_class(cls)
-        bpy.types.Scene.boom_props = PointerProperty(
-            type = BoomProps, name = 'BoomSmash Properties', description = '')
 
-        bpy.types.WindowManager.boom_props = PointerProperty(
-            type = BoomProps, name = 'BoomSmash Global Properties', description = '')
-
-def unregister():  # note how unregistering is done in reverse
+def unregister():
     for cls in reversed(classes):
         bpy.utils.unregister_class(cls)
 
