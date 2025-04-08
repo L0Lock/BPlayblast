@@ -1,3 +1,9 @@
+> [!IMPORTANT]
+>
+> Since there are now other and better solutions for playblasts on Blender such as [Playblast - Superhive (formerly Blender Market)](https://superhivemarket.com/products/playblast), I no longer maintain this addon.  
+> If I ever feel the need to come back at it, it will probably not be under the same form. Hence I am archiving this repository. Use at your own risk, please don't expect me to provide any support for it.
+
+
 # BPlayblast
 
 ![Blender 2.93 - Tested!](https://img.shields.io/badge/Blender%202.93-Tested-brightgreen?style=flat-square&logo=blender)
